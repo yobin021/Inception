@@ -1,387 +1,395 @@
 import React, { useEffect } from 'react';
-import './index.css';
+import ScrollReveal from './components/ScrollReveal';
+import Magnet from './components/Magnet';
+import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
+import GlitchText from './components/GlitchText';
 
 function App() {
   useEffect(() => {
-    // Intersection Observer for reveal animations
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, 80);
-          observer.unobserve(entry.target);
+    // Add smooth scrolling to all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href')?.substring(1);
+        if (targetId) {
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
         }
       });
-    }, { threshold: 0.1 });
-
-    reveals.forEach(el => observer.observe(el));
-
-    return () => {
-      reveals.forEach(el => observer.unobserve(el));
-    }
+    });
   }, []);
 
   return (
-    <>
-      <nav>
-        <div className="nav-logo">INCEPTION</div>
-        <ul className="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#eligibility">Eligibility</a></li>
-          <li><a href="#details">Details</a></li>
-          <li><a href="#timeline">Timeline</a></li>
-          <li><a href="#conduct">Conduct</a></li>
-          <li><a href="#instructions">Instructions</a></li>
-        </ul>
-      </nav>
-
-      {/* HERO */}
-      <div className="hero">
-        <div className="hero-bg"></div>
-        <div className="grid-lines"></div>
-        <div className="hero-badge">March 26–27, 2025 &nbsp;·&nbsp; LICET, Chennai</div>
-        <h1 className="hero-title">
-          <span className="line1">INCEPTION</span>
-          <span className="line2">THE GENESIS EDITION</span>
-        </h1>
-        <p className="hero-sub">
-          A 24-hour intercollege hackathon pushing the boundaries of embedded systems
-          and software innovation. Build. Break. Reimagine.
-        </p>
-        <div className="hero-meta">
-          <div className="meta-pill"><span className="dot"></span> 24 Hours</div>
-          <div className="meta-pill">🏢 Offline Mode</div>
-          <div className="meta-pill">👥 4 Members / Team</div>
-          <div className="meta-pill">💰 ₹300 / Participant</div>
-        </div>
-        <div className="cta-row">
-          <a href="#eligibility" className="btn-primary">Check Eligibility</a>
-          <a href="#timeline" className="btn-outline">View Schedule</a>
-        </div>
-      </div>
-
-      {/* COLLEGE & ABOUT */}
-      <section id="about" className="bg-accent-section">
-        <div className="reveal">
-          <p className="section-label">// 01 — Institution</p>
-          <h2 className="section-title">About the Event</h2>
-          <div className="section-divider"></div>
-        </div>
-
-        <div className="college-block reveal">
-          <div className="college-info">
-            <h3>LICET</h3>
-            <p><span>Institution:</span> Loyola-ICAM College of Engineering and Technology</p>
-            <p><span>Department:</span> Electronics & Communication Engineering</p>
-            <p><span>Organized by:</span> The Spectrum of Engineers Association (SEA)</p>
-            <p><span>Venue:</span> G01 & F11, LICET Campus</p>
-            <p style={{ marginTop: '1rem' }}><span>Event Name:</span> INCEPTION: The Genesis Edition</p>
+    <div className="bg-background-dark text-slate-100 font-body selection:bg-primary/30 overflow-x-hidden">
+      {/* Navigation */}
+      <header className="fixed top-0 w-full z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <h2 className="font-display text-3xl tracking-wider text-white">INCEPTION</h2>
           </div>
-          <div>
-            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: '0.7rem', letterSpacing: '0.2em', color: 'var(--accent3)', textTransform: 'uppercase', marginBottom: '1rem' }}>Industry Partners</p>
-            <div className="partner-list">
-              <div className="partner-chip">Tamizh</div>
-              <div className="partner-chip">Inspire Solutions</div>
-              <div className="partner-chip">Infintin Mobility Solutions Pvt Ltd</div>
+          <nav className="hidden md:flex items-center gap-10">
+            <a className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#about">About</a>
+            <a className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#stats">Stats</a>
+            <a className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#schedule">Schedule</a>
+            <a className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#partners">Partners</a>
+            <Magnet padding={50} disabled={false} magnetStrength={10}>
+              <button className="bg-primary hover:bg-primary/90 text-background-dark font-bold px-6 py-2 rounded-xl glow-cyan font-mono text-sm uppercase">
+                Register Now
+              </button>
+            </Magnet>
+          </nav>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center pt-20 grid-pattern">
+        <div className="absolute inset-0 bg-linear-to-b from-primary/5 via-transparent to-background-dark pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-6 w-full relative z-10 py-20">
+          <div className="flex flex-col items-center justify-center gap-16 text-center max-w-4xl mx-auto">
+            <div className="flex flex-col items-center w-full space-y-8">
+              <div className="flex flex-col items-center justify-center mb-4 w-full text-center">
+                <div className="flex flex-col items-center w-full">
+                  <img src="/licet_logo.png" alt="LICET Logo" className="w-48 md:w-56 mb-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+                  <div className="space-y-1 text-center">
+                    <h2 className="font-display tracking-widest text-4xl md:text-6xl text-white">Loyola-ICAM</h2>
+                    <h3 className="font-mono font-bold tracking-wider text-lg md:text-xl text-white">COLLEGE OF ENGINEERING AND TECHNOLOGY</h3>
+                    <p className="font-mono font-bold tracking-widest text-md md:text-lg text-white pb-2">(Autonomous)</p>
+                    <p className="font-body font-medium text-xs md:text-sm text-slate-300">Loyola Campus, Nungambakkam, Chennai-600034</p>
+                    <p className="font-body font-medium text-xs md:text-sm text-slate-300">Approved by AICTE and Affiliated to Anna University</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary font-mono text-xs tracking-[0.2em] uppercase">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                The Genesis Edition 2026
+
+              </div>
+              <h1 className="font-display text-7xl md:text-9xl text-white leading-[0.9] tracking-tight text-glow">
+                <GlitchText speed={1} enableShadows={true} enableOnHover={false}>INCEPTION</GlitchText><br />
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent">THE GENESIS</span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">
+                The ultimate tech genesis begins at LICET Chennai. 24 hours of pure innovation, building the future of electronics and communication.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <Magnet padding={50} disabled={false} magnetStrength={3}>
+                  <button className="px-8 py-4 bg-primary text-background-dark font-display text-2xl tracking-wide rounded-xl glow-cyan">
+                    REGISTER NOW
+                  </button>
+                </Magnet>
+              </div>
+              <div className="pt-6 font-mono text-sm text-primary/60 flex items-center justify-center gap-6">
+                <h4 className="flex items-center gap-2">
+                  <img src="https://img.icons8.com/?size=100&id=111074&format=png&color=FFFFFF" alt="Calendar" className="w-4 h-4 opacity-70" />
+                  March 26-27, 2025
+                </h4>
+                <h4 className="flex items-center gap-2"><img src="https://img.icons8.com/?size=100&id=s0vJQMKvmaAl&format=png&color=FFFFFF" alt="Location" className="w-4 h-4 opacity-70" /> LICET, Chennai</h4>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="about-grid" style={{ marginTop: '2.5rem' }}>
-          <div className="about-card reveal">
-            <div className="card-icon">💡</div>
-            <div className="card-title">Encourage Innovation</div>
-            <p className="card-text">Push participants to think beyond conventional solutions and develop novel, creative ideas that challenge the status quo.</p>
-          </div>
-          <div className="about-card reveal">
-            <div className="card-icon">🏭</div>
-            <div className="card-title">Solve Real-World Problems</div>
-            <p className="card-text">Tackle actual industry challenges posed by our collaboration partners, bridging the gap between academic learning and professional needs.</p>
-          </div>
-          <div className="about-card reveal">
-            <div className="card-icon">🔩</div>
-            <div className="card-title">Embedded & Software Dev</div>
-            <p className="card-text">Promote the development of embedded systems and software products that address modern engineering challenges.</p>
-          </div>
-          <div className="about-card reveal">
-            <div className="card-icon">🚀</div>
-            <div className="card-title">Startup Culture</div>
-            <p className="card-text">Foster entrepreneurial thinking with opportunities for incubation support and potential pilot implementation of top solutions.</p>
           </div>
         </div>
       </section>
 
-      {/* ELIGIBILITY */}
-      <section id="eligibility">
-        <div className="reveal">
-          <p className="section-label">// 02 — Who Can Apply</p>
-          <h2 className="section-title">Eligibility Criteria</h2>
-          <div className="section-divider"></div>
-        </div>
-
-        <div className="eligibility-grid reveal">
-          <div className="elig-card">
-            <h3>Participant Requirements</h3>
-            <div className="elig-item">Open to all Undergraduate (UG) students</div>
-            <div className="elig-item">Teams must consist of exactly 4 members</div>
-            <div className="elig-item">Intercollege participation is welcome</div>
-            <div className="elig-item">Registration fee: ₹300 per participant (₹1,200 per team)</div>
-          </div>
-          <div className="elig-card">
-            <h3>Shortlisting Process</h3>
-            <div className="elig-item">Online screening through quiz platforms</div>
-            <div className="elig-item">Shortlisted teams announced 2 days after the quiz</div>
-            <div className="elig-item">Problem statements released 2 days before hackathon begins</div>
-            <div className="elig-item">20 to 30 teams selected (80–120 total participants)</div>
-          </div>
-        </div>
-      </section>
-
-      {/* HACKATHON DETAILS */}
-      <section id="details" className="bg-accent-section">
-        <div className="reveal">
-          <p className="section-label">// 03 — Event Overview</p>
-          <h2 className="section-title">Hackathon Details</h2>
-          <div className="section-divider"></div>
-        </div>
-
-        <div className="stats-row reveal">
-          <div className="stat-box">
-            <div className="stat-num">24</div>
-            <div className="stat-label">Hours Duration</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-num">30</div>
-            <div className="stat-label">Max Teams</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-num">120</div>
-            <div className="stat-label">Max Participants</div>
-          </div>
-          <div className="stat-box">
-            <div className="stat-num">4</div>
-            <div className="stat-label">Members / Team</div>
-          </div>
-        </div>
-
-        <div className="reveal">
-          <p className="section-label" style={{ marginBottom: '1.2rem' }}>Jury Evaluation Criteria</p>
-          <div className="jury-grid">
-            <div className="jury-card">
-              <div className="jury-icon">🧠</div>
-              <div className="jury-title">Innovation</div>
-              <p className="jury-desc">Originality and creative problem-solving approach</p>
+      {/* About Section */}
+      <section className="py-32 bg-background-dark relative" id="about">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-6">
+              <ScrollReveal index={0}>
+                <h2 className="font-display text-5xl text-white">ABOUT THE EVENT</h2>
+              </ScrollReveal>
+              <ScrollReveal index={1}>
+                <div className="h-1 w-20 bg-primary"></div>
+              </ScrollReveal>
+              <ScrollReveal index={2}>
+                <p className="text-slate-400 text-lg leading-relaxed">
+                  Organized by the ECE department at Loyola ICAM College of Engineering and Technology (LICET), INCEPTION is a premier hackathon designed to foster innovation and technical excellence.
+                </p>
+              </ScrollReveal>
+              <ScrollReveal index={3}>
+                <p className="text-slate-400 text-lg leading-relaxed">
+                  We bring together the brightest minds to solve real-world challenges using cutting-edge electronics and communication technologies. This edition marks a new chapter in our pursuit of engineering brilliance.
+                </p>
+              </ScrollReveal>
+              <div className="grid grid-cols-2 gap-6 pt-6">
+                <ScrollReveal index={4} className="p-4 rounded-xl bg-card-dark border border-white/5 hover:bg-white/5 transition-colors">
+                  <h4 className="font-mono text-xs uppercase font-bold text-primary">LICET Chennai</h4>
+                  <p className="text-xs text-slate-500">Host Institution</p>
+                </ScrollReveal>
+                <ScrollReveal index={5} className="p-4 rounded-xl bg-card-dark border border-white/5 hover:bg-white/5 transition-colors">
+                  <h4 className="font-mono text-xs uppercase font-bold text-secondary">ECE Department</h4>
+                  <p className="text-xs text-slate-500">Technical Organizer</p>
+                </ScrollReveal>
+              </div>
             </div>
-            <div className="jury-card">
-              <div className="jury-icon">⚙️</div>
-              <div className="jury-title">Feasibility</div>
-              <p className="jury-desc">Practical viability and real-world applicability</p>
-            </div>
-            <div className="jury-card">
-              <div className="jury-icon">🔬</div>
-              <div className="jury-title">Technical Complexity</div>
-              <p className="jury-desc">Depth of technical implementation and engineering rigor</p>
-            </div>
-            <div className="jury-card">
-              <div className="jury-icon">🎨</div>
-              <div className="jury-title">UI/UX</div>
-              <p className="jury-desc">Design quality, usability, and user experience</p>
-            </div>
-            <div className="jury-card">
-              <div className="jury-icon">📈</div>
-              <div className="jury-title">Impact & Scalability</div>
-              <p className="jury-desc">Potential for broader adoption and measurable impact</p>
-            </div>
-            <div className="jury-card">
-              <div className="jury-icon">🎯</div>
-              <div className="jury-title">Constraint Implementation</div>
-              <p className="jury-desc">How well surprise constraints are addressed in the build</p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4 pt-12">
+                <ScrollReveal index={2} className="h-64 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center p-6 text-center overflow-hidden relative group">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=500')] bg-cover opacity-20 group-hover:scale-110 transition-transform"></div>
+                  <div className="relative z-10">
+                    <div className="font-display text-5xl text-primary">30+</div>
+                    <div className="font-mono text-xs uppercase tracking-widest text-white">Teams Competing</div>
+                  </div>
+                </ScrollReveal>
+                <ScrollReveal index={4} className="h-48 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center p-6 text-center shadow-[0_0_30px_rgba(123,47,255,0.1)]">
+                  <div>
+                    <div className="font-display text-5xl text-accent">24</div>
+                    <div className="font-mono text-xs uppercase tracking-widest text-white">Hours Run</div>
+                  </div>
+                </ScrollReveal>
+              </div>
+              <div className="space-y-4">
+                <ScrollReveal index={3} className="h-48 rounded-2xl bg-secondary/10 border border-secondary/20 flex items-center justify-center p-6 text-center shadow-[0_0_30px_rgba(255,60,172,0.1)]">
+                  <div>
+                    <div className="font-display text-5xl text-secondary">120</div>
+                    <div className="font-mono text-xs uppercase tracking-widest text-white">Innovators</div>
+                  </div>
+                </ScrollReveal>
+                <ScrollReveal index={5} className="h-64 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-6 text-center overflow-hidden relative group">
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=500')] bg-cover opacity-20 group-hover:scale-110 transition-transform"></div>
+                  <div className="relative z-10">
+                    <div className="font-display text-5xl text-white">4</div>
+                    <div className="font-mono text-xs uppercase tracking-widest text-white">Per Team</div>
+                  </div>
+                </ScrollReveal>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TIMELINE */}
-      <section id="timeline">
-        <div className="reveal">
-          <p className="section-label">// 04 — Schedule</p>
-          <h2 className="section-title">Hackathon Timeline</h2>
-          <div className="section-divider"></div>
-        </div>
-
-        <div className="timeline-wrapper reveal">
-          {/* DAY 1 */}
-          <div className="timeline-day">
-            <h3>Day 1 <span className="day-badge">March 26</span></h3>
-
-            <div className="timeline-item">
-              <div className="t-time">8:00 – 8:30 AM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">📋 Registration</div></div>
+      {/* Stats Bar */}
+      <section className="py-20 border-y border-white/10 bg-card-dark/30" id="stats">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center group">
+              <div className="font-display text-6xl text-white group-hover:text-primary transition-colors">24H</div>
+              <div className="font-mono text-xs text-slate-500 uppercase tracking-[0.2em]">Endurance</div>
             </div>
-            <div className="timeline-item">
-              <div className="t-time">8:30 – 9:00 AM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">🎙️ Inauguration & Briefing</div></div>
+            <div className="text-center group border-l border-white/10">
+              <div className="font-display text-6xl text-white group-hover:text-secondary transition-colors">30</div>
+              <div className="font-mono text-xs text-slate-500 uppercase tracking-[0.2em]">Elite Teams</div>
             </div>
-            <div className="timeline-item">
-              <div className="t-time">9:00 AM</div>
-              <div className="t-dot" style={{ background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }}></div>
-              <div className="t-content"><div className="t-activity">🚀 Hackathon Begins</div></div>
+            <div className="text-center group border-l border-white/10">
+              <div className="font-display text-6xl text-white group-hover:text-accent transition-colors">120</div>
+              <div className="font-mono text-xs text-slate-500 uppercase tracking-[0.2em]">Participants</div>
             </div>
-            <div className="timeline-item">
-              <div className="t-time">11:30 AM</div>
-              <div className="t-dot" style={{ background: 'var(--gold)', boxShadow: '0 0 8px var(--gold)' }}></div>
-              <div className="t-content"><div className="t-activity">⚡ Constraint 1 Released</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">1:30 PM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">👁️ Review 1</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">5:30 PM</div>
-              <div className="t-dot" style={{ background: 'var(--gold)', boxShadow: '0 0 8px var(--gold)' }}></div>
-              <div className="t-content"><div className="t-activity">⚡ Constraint 2 Released</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">8:00 PM</div>
-              <div className="t-dot" style={{ background: 'var(--accent2)', boxShadow: '0 0 8px var(--accent2)' }}></div>
-              <div className="t-content"><div className="t-activity">🌙 Day 1 Ends — 11 Hours Completed</div></div>
-            </div>
-          </div>
-
-          {/* DAY 2 */}
-          <div className="timeline-day">
-            <h3>Day 2 <span className="day-badge">March 27</span></h3>
-
-            <div className="timeline-item">
-              <div className="t-time">8:00 AM</div>
-              <div className="t-dot" style={{ background: 'var(--accent)', boxShadow: '0 0 8px var(--accent)' }}></div>
-              <div className="t-content"><div className="t-activity">☀️ Hackathon Resumes</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">10:30 AM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">👁️ Review 2</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">1:30 PM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">📊 Progress Check</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">4:00 PM</div>
-              <div className="t-dot" style={{ background: 'var(--accent2)', boxShadow: '0 0 8px var(--accent2)' }}></div>
-              <div className="t-content"><div className="t-activity">🏁 Hackathon Ends</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">4:00 – 5:30 PM</div>
-              <div className="t-dot"></div>
-              <div className="t-content"><div className="t-activity">🎤 Final Presentations & Judging</div></div>
-            </div>
-            <div className="timeline-item">
-              <div className="t-time">5:30 – 7:00 PM</div>
-              <div className="t-dot" style={{ background: 'var(--gold)', boxShadow: '0 0 8px var(--gold)' }}></div>
-              <div className="t-content"><div className="t-activity">🏆 Valedictory & Prize Distribution</div></div>
+            <div className="text-center group border-l border-white/10">
+              <div className="font-display text-6xl text-white group-hover:text-white transition-colors">4</div>
+              <div className="font-mono text-xs text-slate-500 uppercase tracking-[0.2em]">Size of Squad</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CODE OF CONDUCT */}
-      <section id="conduct" className="bg-accent-section">
-        <div className="reveal">
-          <p className="section-label">// 05 — Rules</p>
-          <h2 className="section-title">Code of Conduct</h2>
-          <div className="section-divider"></div>
-        </div>
+      {/* Eligibility & Jury */}
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row gap-12">
+            <div className="flex-1 space-y-10">
+              <div className="space-y-2">
+                <h2 className="font-display text-5xl text-white">ELIGIBILITY</h2>
+                <div className="h-1 w-20 bg-secondary"></div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
+                  <div>
+                    <h4 className="font-bold text-white mb-2 text-lg">Open to Undergraduate Students</h4>
+                    <p className="text-slate-400 text-sm">Current engineering students from any recognized institution in India.</p>
+                  </div>
+                </div>
+                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
+                  <div>
+                    <h4 className="font-bold text-white mb-2 text-lg">Inter-college Teams Allowed</h4>
+                    <p className="text-slate-400 text-sm">Collaborate with peers across different colleges to form your squad.</p>
+                  </div>
+                </div>
+                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
+                  <div>
+                    <h4 className="font-bold text-white mb-2 text-lg">ECE/Tech Focused</h4>
+                    <p className="text-slate-400 text-sm">Projects should ideally leverage hardware, embedded systems, or IoT.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div className="conduct-grid reveal">
-          <div className="conduct-card">
-            <div className="conduct-num">01</div>
-            <div className="conduct-title">Professionalism</div>
-            <p className="conduct-text">Maintain professional behaviour at all times throughout the event premises and interactions.</p>
-          </div>
-          <div className="conduct-card">
-            <div className="conduct-num">02</div>
-            <div className="conduct-title">Respect</div>
-            <p className="conduct-text">Respect team members, fellow participants, mentors, and jury members at all times.</p>
-          </div>
-          <div className="conduct-card">
-            <div className="conduct-num">03</div>
-            <div className="conduct-title">Originality</div>
-            <p className="conduct-text">Avoid plagiarism in all forms. All submitted work must be original and developed during the hackathon.</p>
-          </div>
-          <div className="conduct-card">
-            <div className="conduct-num">04</div>
-            <div className="conduct-title">Rule Adherence</div>
-            <p className="conduct-text">Follow all event rules and guidelines as stated by the organizing committee without exception.</p>
-          </div>
-        </div>
-
-        <div className="warning-box reveal">
-          ⚠️ &nbsp; Violation of any rule may result in immediate disqualification from the event.
-        </div>
-      </section>
-
-      {/* GENERAL INSTRUCTIONS */}
-      <section id="instructions">
-        <div className="reveal">
-          <p className="section-label">// 06 — Essentials</p>
-          <h2 className="section-title">General Instructions</h2>
-          <div className="section-divider"></div>
-        </div>
-
-        <div className="instructions-grid reveal">
-          <div className="instr-item">
-            <div className="instr-icon">💻</div>
-            <p className="instr-text">Participants must bring their own laptop for the entire duration of the hackathon.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">🔌</div>
-            <p className="instr-text">Teams must carry Extension Boxes / Power Strips for power management.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">🔧</div>
-            <p className="instr-text">All required hardware components must be brought by the participants themselves.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">⏱️</div>
-            <p className="instr-text">All development must be done exclusively during the hackathon. Pre-built projects are not permitted.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">🛡️</div>
-            <p className="instr-text">Participants are solely responsible for the safety of their own equipment and belongings.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">📦</div>
-            <p className="instr-text">Submit all project deliverables before the deadline. Late submissions will not be accepted.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">📅</div>
-            <p className="instr-text">Follow the event schedule strictly and adhere to the Code of Conduct at all times.</p>
-          </div>
-          <div className="instr-item">
-            <div className="instr-icon">📶</div>
-            <p className="instr-text">Stable Wi-Fi, projectors, and sound systems will be provided at the venue.</p>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer>
-        <div className="footer-logo">INCEPTION</div>
-        <div className="footer-sub">The Genesis Edition &nbsp;·&nbsp; March 26–27, 2025</div>
-        <p className="footer-info">
-          Organized by The Spectrum of Engineers Association (SEA)<br />
-          Electronics & Communication Engineering · LICET, Chennai<br />
-          Venues: G01 & F11
-        </p>
+      {/* Event Timeline */}
+      <section className="py-32 bg-card-dark relative overflow-hidden" id="schedule">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="font-display text-6xl text-white mb-4">EVENT TIMELINE</h2>
+            <p className="font-mono text-xs text-primary tracking-widest uppercase">Chronicle of Innovation</p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Day 1 */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4 mb-8">
+                <span className="px-4 py-1 bg-primary text-background-dark font-display text-xl rounded">DAY 01</span>
+                <span className="font-mono text-sm text-slate-400">March 26, 2025</span>
+              </div>
+              <div className="space-y-6 relative border-l border-white/10 pl-8 ml-4">
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20"></div>
+                  <div className="font-mono text-xs text-primary mb-1">08:00 AM</div>
+                  <h4 className="text-xl font-bold text-white">Reporting & Onboarding</h4>
+                  <p className="text-slate-400 text-sm">Team check-ins and kit distribution.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-600"></div>
+                  <div className="font-mono text-xs text-slate-500 mb-1">10:00 AM</div>
+                  <h4 className="text-xl font-bold text-white">Opening Ceremony</h4>
+                  <p className="text-slate-400 text-sm">Keynote by Industry Experts at LICET Auditorium.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-secondary ring-4 ring-secondary/20"></div>
+                  <div className="font-mono text-xs text-secondary mb-1">11:00 AM</div>
+                  <h4 className="text-xl font-bold text-white">Hacking Commences</h4>
+                  <p className="text-slate-400 text-sm">The 24-hour countdown starts now.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-600"></div>
+                  <div className="font-mono text-xs text-slate-500 mb-1">08:00 PM</div>
+                  <h4 className="text-xl font-bold text-white">Mentoring Session I</h4>
+                  <p className="text-slate-400 text-sm">Technical guidance from industry partners.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Day 2 */}
+            <div className="space-y-8">
+              <div className="flex items-center gap-4 mb-8">
+                <span className="px-4 py-1 bg-accent text-white font-display text-xl rounded">DAY 02</span>
+                <span className="font-mono text-sm text-slate-400">March 27, 2025</span>
+              </div>
+              <div className="space-y-6 relative border-l border-white/10 pl-8 ml-4">
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-600"></div>
+                  <div className="font-mono text-xs text-slate-500 mb-1">08:00 AM</div>
+                  <h4 className="text-xl font-bold text-white">Mentoring Session II</h4>
+                  <p className="text-slate-400 text-sm">Final push and pitch preparation.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-secondary ring-4 ring-secondary/20"></div>
+                  <div className="font-mono text-xs text-secondary mb-1">11:00 AM</div>
+                  <h4 className="text-xl font-bold text-white">Hacking Ends</h4>
+                  <p className="text-slate-400 text-sm">All code and hardware prototypes must be submitted.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20"></div>
+                  <div className="font-mono text-xs text-primary mb-1">01:00 PM</div>
+                  <h4 className="text-xl font-bold text-white">Jury Evaluation</h4>
+                  <p className="text-slate-400 text-sm">Teams pitch their solutions to the panel.</p>
+                </div>
+                <div className="relative">
+                  <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-accent ring-4 ring-accent/20"></div>
+                  <div className="font-mono text-xs text-accent mb-1">04:00 PM</div>
+                  <h4 className="text-xl font-bold text-white">Grand Finale</h4>
+                  <p className="text-slate-400 text-sm">Award ceremony and closing remarks.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Industry Partners */}
+      <section className="py-32" id="partners">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="font-display text-5xl text-white mb-4">INDUSTRY PARTNERS</h2>
+          <div className="h-1 w-20 bg-primary mx-auto mb-16"></div>
+          <div className="flex flex-wrap justify-center gap-12 items-center grayscale opacity-60 hover:opacity-100 transition-opacity">
+            <div className="px-10 py-6 border border-white/10 rounded-2xl bg-card-dark/50 flex flex-col items-center">
+              <span className="font-display text-2xl text-white">TAMIZH</span>
+            </div>
+            <div className="px-10 py-6 border border-white/10 rounded-2xl bg-card-dark/50 flex flex-col items-center">
+              <span className="font-display text-2xl text-white">INSPIRE SOLUTIONS</span>
+            </div>
+            <div className="px-10 py-6 border border-white/10 rounded-2xl bg-card-dark/50 flex flex-col items-center">
+              <span className="font-display text-2xl text-white">INFINTIN MOBILITY<br />SOLUTIONS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-card-dark border-t border-white/10 pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-16 mb-20">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <h2 className="font-display text-2xl tracking-wider text-white">INCEPTION</h2>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Redefining the boundaries of electronics through collaborative innovation. Join us at LICET for a weekend that defines the future.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <h4 className="font-mono text-xs uppercase tracking-widest text-primary font-bold"><a href="https://www.google.com/maps/place/LICET+:+Loyola-ICAM+College+of+Engineering+and+Technology/@13.0592975,80.2336586,17z/data=!3m1!4b1!4m6!3m5!1s0x3a5266606a8d51eb:0xcfedaad4ca5bd750!8m2!3d13.0592975!4d80.2336586!16s%2Fm%2F0dlk73f?entry=ttu&g_ep=EgoyMDI2MDMwNC4xIKXMDSoASAFQAw%3D%3D">Venue Info</a></h4>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="text-sm text-slate-400">
+                    <p className="text-white font-bold">Loyola-ICAM College of Engineering and Technology</p>
+                    <p>G01 & F11 Labs, ECE Department</p>
+                    <p>Nungambakkam, Chennai - 600034</p>
+                  </div>
+                </div>
+                <div className="mt-4 rounded-xl overflow-hidden border border-white/10 h-40 w-full relative">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Loyola-ICAM%20College%20of%20Engineering%20and%20Technology&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(100%)" }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    title="LICET Map"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h4 className="font-mono text-xs uppercase tracking-widest text-secondary font-bold">Organized By</h4>
+              <div className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/5">
+                <img src="/SEA.png" alt="SEA Logo" className="w-12 h-12 object-contain" />
+                <div>
+                  <p className="text-white font-bold text-sm">SEA</p>
+                  <p className="text-xs text-slate-500">Student Electronics Association</p>
+                </div>
+              </div>
+              {/* <div className="flex gap-4">
+                <a className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 transition-colors" href="#">
+                  <span className="material-symbols-outlined text-lg">public</span>
+                </a>
+                <a className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary/20 transition-colors" href="#">
+                  <span className="material-symbols-outlined text-lg">mail</span>
+                </a>
+              </div> */}
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-white/5 text-slate-600 text-xs font-mono">
+            <p>© 2025 INCEPTION: THE GENESIS EDITION. ALL RIGHTS RESERVED.</p>
+            <div className="flex gap-8">
+              <a className="hover:text-primary transition-colors" href="#">PRIVACY POLICY</a>
+              <a className="hover:text-primary transition-colors" href="#">TERMS OF SERVICE</a>
+            </div>
+          </div>
+        </div>
       </footer>
-    </>
+    </div>
   );
 }
 
