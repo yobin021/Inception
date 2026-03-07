@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ScrollReveal from './components/ScrollReveal';
 import Magnet from './components/Magnet';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
-import GlitchText from './components/GlitchText';
+import InceptionSvg from './components/InceptionSvg';
 import Loader from './components/Loader';
 
 function App() {
@@ -92,8 +92,8 @@ function App() {
 
               </div>
               <div className="text-center flex flex-col items-center justify-center py-4">
-                <GlitchText text="INCEPTION" />
-                <span className="font-display text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent text-glow py-2">THE GENESIS</span>
+                <InceptionSvg />
+                <span className="font-display text-9xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent text-glow py-2 mt-2 md:mt-4">THE GENESIS</span>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <Magnet padding={50} disabled={false} magnetStrength={3}>
@@ -188,7 +188,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center group">
-              <div className="font-display text-6xl text-white group-hover:text-primary transition-colors">24H</div>
+              <div className="font-display text-6xl text-white group-hover:text-primary transition-colors">20H</div>
               <div className="font-mono text-xs text-slate-500 uppercase tracking-[0.2em]">Endurance</div>
             </div>
             <div className="text-center group border-l border-white/10">
@@ -268,7 +268,7 @@ function App() {
               <div className="space-y-6 relative border-l border-white/10 pl-8 ml-4">
                 <div className="relative">
                   <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-primary/20"></div>
-                  <div className="font-mono text-xs text-primary mb-1">08:00 AM</div>
+                  <div className="font-mono text-xs text-primary mb-1">09:00 AM</div>
                   <h4 className="text-xl font-bold text-white">Reporting & Onboarding</h4>
                   <p className="text-slate-400 text-sm">Team check-ins and kit distribution.</p>
                 </div>
@@ -302,7 +302,7 @@ function App() {
               <div className="space-y-6 relative border-l border-white/10 pl-8 ml-4">
                 <div className="relative">
                   <div className="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-600"></div>
-                  <div className="font-mono text-xs text-slate-500 mb-1">08:00 AM</div>
+                  <div className="font-mono text-xs text-slate-500 mb-1">09:00 AM</div>
                   <h4 className="text-xl font-bold text-white">Mentoring Session II</h4>
                   <p className="text-slate-400 text-sm">Final push and pitch preparation.</p>
                 </div>
@@ -367,8 +367,6 @@ function App() {
                 <div className="flex items-start gap-4">
                   <div className="text-sm text-slate-400">
                     <p className="text-white font-bold">Loyola-ICAM College of Engineering and Technology</p>
-                    <p>G01 & F11 Labs, ECE Department</p>
-                    <p>Nungambakkam, Chennai - 600034</p>
                   </div>
                 </div>
                 <div className="mt-4 rounded-xl overflow-hidden border border-white/10 h-40 w-full relative">
@@ -405,7 +403,7 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-white/5 text-slate-600 text-xs font-mono">
-            <p>© 2025 INCEPTION: THE GENESIS EDITION. ALL RIGHTS RESERVED.</p>
+            <p>© 2026 INCEPTION: THE GENESIS EDITION. ALL RIGHTS RESERVED.</p>
             <div className="flex gap-8">
               <a className="hover:text-primary transition-colors" href="#">PRIVACY POLICY</a>
               <a className="hover:text-primary transition-colors" href="#">TERMS OF SERVICE</a>

@@ -1,0 +1,37 @@
+.svg-stroke-text {
+  font-size: 320px;
+  font-weight: 900;
+  fill: transparent;
+  stroke: #F5F6F7;
+  stroke-width: 2px;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: svg-stroke-anim 5.5s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+  letter-spacing: -0.01em;
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3));
+}
+
+@keyframes svg-stroke-anim {
+  0% {
+    stroke-dashoffset: 1200;
+    fill: transparent;
+  }
+  35% {
+    stroke-dashoffset: 0;
+    fill: transparent;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    fill: #F5F6F7;
+    filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.6));
+  }
+  85% {
+    stroke-dashoffset: 0;
+    fill: #F5F6F7;
+    filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.6));
+  }
+  100% {
+    stroke-dashoffset: 1200;
+    fill: transparent;
+  }
+}
