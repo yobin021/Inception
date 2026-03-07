@@ -1,10 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ScrollReveal from './components/ScrollReveal';
 import Magnet from './components/Magnet';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 import GlitchText from './components/GlitchText';
+import Loader from './components/Loader';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsFadingOut(true);
+      setTimeout(() => setIsLoading(false), 500); // Wait for CSS opacity transition
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   useEffect(() => {
     // Add smooth scrolling to all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -24,7 +37,13 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-background-dark text-slate-100 font-body selection:bg-primary/30 overflow-x-hidden">
+    <>
+      {isLoading && (
+        <div className={`fixed inset-0 z-9999 transition-opacity duration-500 ${isFadingOut ? 'opacity-0' : 'opacity-100'}`}>
+          <Loader />
+        </div>
+      )}
+      <div className="min-h-screen bg-background-dark font-body text-slate-100 overflow-x-hidden selection:bg-primary/30">
       {/* Navigation */}
       <header className="fixed top-0 w-full z-50 bg-background-dark/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -72,13 +91,10 @@ function App() {
                 The Genesis Edition 2026
 
               </div>
-              <h1 className="font-display text-7xl md:text-9xl text-white leading-[0.9] tracking-tight text-glow">
-                <GlitchText speed={1} enableShadows={true} enableOnHover={false}>INCEPTION</GlitchText><br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent">THE GENESIS</span>
-              </h1>
-              <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">
-                The ultimate tech genesis begins at LICET Chennai. 24 hours of pure innovation, building the future of electronics and communication.
-              </p>
+              <div className="text-center flex flex-col items-center justify-center py-4">
+                <GlitchText text="INCEPTION" />
+                <span className="font-display text-6xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent text-glow py-2">THE GENESIS</span>
+              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <Magnet padding={50} disabled={false} magnetStrength={3}>
                   <button className="px-8 py-4 bg-primary text-background-dark font-display text-2xl tracking-wide rounded-xl glow-cyan">
@@ -86,12 +102,12 @@ function App() {
                   </button>
                 </Magnet>
               </div>
-              <div className="pt-6 font-mono text-sm text-primary/60 flex items-center justify-center gap-6">
+              <div className="pt-6 font-mono text-lg md:text-xl text-primary/60 flex items-center justify-center gap-8">
                 <h4 className="flex items-center gap-2">
-                  <img src="https://img.icons8.com/?size=100&id=111074&format=png&color=FFFFFF" alt="Calendar" className="w-4 h-4 opacity-70" />
-                  March 26-27, 2025
+                  <img src="https://img.icons8.com/?size=100&id=111074&format=png&color=FFFFFF" alt="Calendar" className="w-5 h-5 opacity-70" />
+                  March 26-27, 2026
                 </h4>
-                <h4 className="flex items-center gap-2"><img src="https://img.icons8.com/?size=100&id=s0vJQMKvmaAl&format=png&color=FFFFFF" alt="Location" className="w-4 h-4 opacity-70" /> LICET, Chennai</h4>
+                <h4 className="flex items-center gap-2"><img src="https://img.icons8.com/?size=100&id=s0vJQMKvmaAl&format=png&color=FFFFFF" alt="Location" className="w-5 h-5 opacity-70" /> LICET, Chennai</h4>
               </div>
             </div>
 
@@ -192,37 +208,45 @@ function App() {
       </section>
 
       {/* Eligibility & Jury */}
-      <section className="py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row gap-12">
-            <div className="flex-1 space-y-10">
-              <div className="space-y-2">
-                <h2 className="font-display text-5xl text-white">ELIGIBILITY</h2>
-                <div className="h-1 w-20 bg-secondary"></div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
-                  <div>
-                    <h4 className="font-bold text-white mb-2 text-lg">Open to Undergraduate Students</h4>
-                    <p className="text-slate-400 text-sm">Current engineering students from any recognized institution in India.</p>
-                  </div>
-                </div>
-                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
-                  <div>
-                    <h4 className="font-bold text-white mb-2 text-lg">Inter-college Teams Allowed</h4>
-                    <p className="text-slate-400 text-sm">Collaborate with peers across different colleges to form your squad.</p>
-                  </div>
-                </div>
-                <div className="p-6 rounded-2xl bg-card-dark border border-white/5 flex flex-col gap-4 text-center items-center hover:bg-white/5 transition-colors">
-                  <div>
-                    <h4 className="font-bold text-white mb-2 text-lg">ECE/Tech Focused</h4>
-                    <p className="text-slate-400 text-sm">Projects should ideally leverage hardware, embedded systems, or IoT.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+      <section className="py-32 bg-background-dark relative z-10">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="font-display text-5xl md:text-7xl text-white">ELIGIBILITY</h2>
+            <div className="h-1 w-24 bg-secondary mx-auto"></div>
+            <p className="text-slate-400 font-mono text-sm tracking-widest uppercase mt-4">Who can participate?</p>
           </div>
+          
+          <ScrollStack
+            itemDistance={40}
+            itemScale={0.05}
+            itemStackDistance={50}
+            stackPosition={0.15}
+            scaleEndPosition={0.05}
+            baseScale={0.85}
+          >
+            <ScrollStackItem itemClassName="p-10 md:p-14 rounded-3xl bg-card-dark border border-white/10 flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-start shadow-2xl">
+              <div className="text-center md:text-left">
+                <h4 className="font-bold text-white mb-3 text-2xl md:text-3xl font-display tracking-wide">Undergraduates</h4>
+                <p className="text-slate-400 text-lg">Current engineering students from any recognized institution across India.</p>
+              </div>
+            </ScrollStackItem>
+            
+            <ScrollStackItem itemClassName="p-10 md:p-14 rounded-3xl bg-card-dark border border-white/10 flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-start shadow-2xl">
+             
+              <div className="text-center md:text-left">
+                <h4 className="font-bold text-white mb-3 text-2xl md:text-3xl font-display tracking-wide">Inter-college Teams</h4>
+                <p className="text-slate-400 text-lg">Collaborate with peers across different colleges to form your ultimate squad.</p>
+              </div>
+            </ScrollStackItem>
+            
+            <ScrollStackItem itemClassName="p-10 md:p-14 rounded-3xl bg-card-dark border border-white/10 flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-start shadow-2xl">
+        
+              <div className="text-center md:text-left">
+                <h4 className="font-bold text-white mb-3 text-2xl md:text-3xl font-display tracking-wide">Tech Focus</h4>
+                <p className="text-slate-400 text-lg">Projects can be on both hardware and software.</p>
+              </div>
+            </ScrollStackItem>
+          </ScrollStack>
         </div>
       </section>
 
@@ -390,6 +414,7 @@ function App() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
 
